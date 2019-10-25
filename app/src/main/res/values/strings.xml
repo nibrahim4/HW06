@@ -3,4 +3,16 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="btn_save">Save</string>
+    <string name="tv_selectAvatar">My Avatar</string>
+    <string name="hint_firstName">First Name</string>
+    <string name="et_firstName" />
+    <string name="hint_lastName">Last Name</string>
+    <string name="et_lastName" />
+    <string name="hint_studentNumber">Student Number</string>
+    <string name="rb_cs">CS</string>
+    <string name="rb_sis">SIS</string>
+    <string name="rb_bio">BIO</string>
+    <string name="rb_other">Other</string>
+    <string name="tv_dept">Departments</string>
 </resources>
