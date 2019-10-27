@@ -1,7 +1,7 @@
 package com.example.hw06;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -11,8 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -22,22 +20,50 @@ import android.widget.TextView;
  */
 public class MyProfileFragment extends Fragment {
 
+    public View v_avatar;
+    public ImageView iv_selectAvatar;
+
     private OnFragmentInteractionListener mListener;
 
-    public MyProfileFragment() {
+    @SuppressLint("ValidFragment")
+    public MyProfileFragment(View view) {
+
+        v_avatar = view;
+    }
+
+    public MyProfileFragment(){
         // Required empty public constructor
     }
 
 
+    @SuppressLint("ResourceType")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        getActivity().setTitle("My Profile");
+
+
+
+
        return inflater.inflate(R.layout.fragment_my_profile, container, false);
     }
 
+    @SuppressLint("ResourceType")
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+            iv_selectAvatar = getActivity().findViewById(R.id.iv_selectAvatar);
+
+            if(v_avatar != null){
+                if(v_avatar.getTag().equals("avatar1")){
+
+                    iv_selectAvatar.setImageResource(R.drawable.avatar_f_3);
+                }
+
+            }
+
 
         getActivity().findViewById(R.id.iv_selectAvatar).setOnClickListener(new View.OnClickListener() {
            @Override
