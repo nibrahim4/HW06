@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
-public class MainActivity extends AppCompatActivity implements MyProfileFragment.OnFragmentInteractionListener , SelectAvatarFragment.OnFragmentInteractionListener{
+public class MainActivity extends AppCompatActivity implements MyProfileFragment.OnFragmentInteractionListener , SelectAvatarFragment.OnFragmentInteractionListener, DisplayMyProfileFragment.OnFragmentInteractionListener{
 
     public MyProfileFragment profileFragment = new MyProfileFragment();
 
@@ -29,12 +29,25 @@ public class MainActivity extends AppCompatActivity implements MyProfileFragment
     }
 
     @Override
-    public void goToPreviousFragment(View view) {
+    public void goToDisplayMyProfileFragment(View view) {
 
-        //profileFragment.v_avatar = view;
+        getFragmentManager().beginTransaction()
+                .replace(R.id.container, new DisplayMyProfileFragment(view), "displayProfile")
+                .commit();
+    }
+
+    @Override
+    public void goToPreviousFragment(View view) {
 
         getFragmentManager().beginTransaction()
                 .replace(R.id.container, new MyProfileFragment(view), "backToProfile")
+                .commit();
+    }
+
+    @Override
+    public void goToProfileFragment() {
+        getFragmentManager().beginTransaction()
+                .replace(R.id.container, new MyProfileFragment(), "fromDisplayToProfile")
                 .commit();
     }
 }

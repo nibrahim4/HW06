@@ -15,4 +15,12 @@
     <string name="rb_bio">BIO</string>
     <string name="rb_other">Other</string>
     <string name="tv_dept">Departments</string>
+    <string name="tv_Name" />
+    <string name="tv_studentId" />
+    <string name="tv_selectedDept" />
+    <string name="btn_Edit">Edit</string>
+    <string name="saved_firstName"></string>
+    <string name="saved_lastName"></string>
+    <string name="saved_studentId"></string>
+    <string name="saved_dept"></string>
 </resources>

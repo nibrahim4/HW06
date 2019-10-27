@@ -59,6 +59,50 @@ public class SelectAvatarFragment extends Fragment {
                 mListener.goToPreviousFragment(view);
             }
         });
+
+        ImageView iv_avatar3 = getActivity().findViewById(R.id.iv_avatar3);
+        iv_avatar3.setTag("avatar3");
+
+        iv_avatar3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                mListener.goToPreviousFragment(view);
+            }
+        });
+
+        ImageView iv_avatar4 = getActivity().findViewById(R.id.iv_avatar4);
+        iv_avatar4.setTag("avatar4");
+
+        iv_avatar4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                mListener.goToPreviousFragment(view);
+            }
+        });
+
+        ImageView iv_avatar5 = getActivity().findViewById(R.id.iv_avatar5);
+        iv_avatar5.setTag("avatar5");
+
+        iv_avatar5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                mListener.goToPreviousFragment(view);
+            }
+        });
+
+        ImageView iv_avatar6 = getActivity().findViewById(R.id.iv_avatar6);
+        iv_avatar6.setTag("avatar6");
+
+        iv_avatar6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                mListener.goToPreviousFragment(view);
+            }
+        });
     }
 
     @Override

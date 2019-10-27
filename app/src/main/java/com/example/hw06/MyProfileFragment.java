@@ -2,15 +2,21 @@ package com.example.hw06;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import android.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -18,10 +24,23 @@ import android.widget.ImageView;
  * {@link MyProfileFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
  */
-public class MyProfileFragment extends Fragment {
+public class MyProfileFragment extends Fragment  {
 
     public View v_avatar;
     public ImageView iv_selectAvatar;
+    public EditText et_firstName;
+    public EditText et_lastName;
+    public EditText et_studentId;
+    public Button btn_save;
+    public String firstName;
+    public String lastName;
+    public String studentId;
+    public RadioGroup rg_dept;
+    public RadioButton rb_cs;
+    public RadioButton rb_sis;
+    public RadioButton rb_bio;
+    public RadioButton rb_other;
+    public String selectedDept;
 
     private OnFragmentInteractionListener mListener;
 
@@ -34,6 +53,10 @@ public class MyProfileFragment extends Fragment {
     public MyProfileFragment(){
         // Required empty public constructor
     }
+
+
+
+
 
 
     @SuppressLint("ResourceType")
@@ -54,25 +77,82 @@ public class MyProfileFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-            iv_selectAvatar = getActivity().findViewById(R.id.iv_selectAvatar);
+        iv_selectAvatar = getActivity().findViewById(R.id.iv_selectAvatar);
 
-            if(v_avatar != null){
-                if(v_avatar.getTag().equals("avatar1")){
-
-                    iv_selectAvatar.setImageResource(R.drawable.avatar_f_3);
-                }
-
+        if (v_avatar != null) {
+            if (v_avatar.getTag().equals("avatar1")) {
+                iv_selectAvatar.setImageResource(R.drawable.avatar_f_3);
+            } else if (v_avatar.getTag().equals("avatar2")) {
+                iv_selectAvatar.setImageResource(R.drawable.avatar_f_2);
+            } else if (v_avatar.getTag().equals("avatar3")) {
+                iv_selectAvatar.setImageResource(R.drawable.avatar_f_1);
+            } else if (v_avatar.getTag().equals("avatar4")) {
+                iv_selectAvatar.setImageResource(R.drawable.avatar_m_1);
+            } else if (v_avatar.getTag().equals("avatar5")) {
+                iv_selectAvatar.setImageResource(R.drawable.avatar_m_2);
+            } else if (v_avatar.getTag().equals("avatar6")) {
+                iv_selectAvatar.setImageResource(R.drawable.avatar_m_3);
             }
 
+        }
+
+        et_firstName = getActivity().findViewById(R.id.et_firstName);
+        et_lastName = getActivity().findViewById(R.id.et_lastName);
+        et_studentId = getActivity().findViewById(R.id.et_studentNumber);
+        rg_dept = getActivity().findViewById(R.id.rg_departments);
+
+        rg_dept.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener(){
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup,  int i){
+                switch(radioGroup.getCheckedRadioButtonId()){
+                    case R.id.rb_bio:
+                        selectedDept = "BIO";
+                        break;
+                    case R.id.rb_cs:
+                         selectedDept = "CS";
+                        break;
+                    case R.id.rb_other:
+                        selectedDept = "OTHER";
+                        break;
+                    case R.id.rb_sis:
+                        selectedDept = "SIS";
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
 
         getActivity().findViewById(R.id.iv_selectAvatar).setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View view) {
-               mListener.goToNextFragment();
-           }
-       });
-    }
+            @Override
+            public void onClick(View view) {
+                mListener.goToNextFragment();
+            }
+        });
 
+        btn_save = getActivity().findViewById(R.id.btn_save);
+        btn_save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+             firstName = et_firstName.getText().toString();
+             lastName = et_lastName.getText().toString();
+             studentId = et_studentId.getText().toString();
+
+             SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+             SharedPreferences.Editor editor = sharedPref.edit();
+
+             editor.putString("saved_firstName", firstName);
+             editor.putString("saved_lastName", lastName);
+             editor.putString("saved_studentId", studentId);
+             editor.putString("saved_dept", selectedDept);
+             editor.apply();
+                
+             mListener.goToDisplayMyProfileFragment(v_avatar);
+            }
+        });
+    }
+    
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -103,5 +183,6 @@ public class MyProfileFragment extends Fragment {
     public interface OnFragmentInteractionListener {
 
         void goToNextFragment();
+        void goToDisplayMyProfileFragment(View view);
     }
 }
