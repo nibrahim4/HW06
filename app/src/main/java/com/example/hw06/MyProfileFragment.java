@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -41,6 +42,7 @@ public class MyProfileFragment extends Fragment  {
     public RadioButton rb_bio;
     public RadioButton rb_other;
     public String selectedDept = "";
+    public Boolean isErrorThrown = false;
 
     private OnFragmentInteractionListener mListener;
 
@@ -142,8 +144,6 @@ public class MyProfileFragment extends Fragment  {
         }
 
 
-
-
         if (v_avatar != null) {
             if (v_avatar.getTag().equals("avatar1")) {
                 iv_selectAvatar.setImageResource(R.drawable.avatar_f_3);
@@ -181,16 +181,51 @@ public class MyProfileFragment extends Fragment  {
              lastName = et_lastName.getText().toString();
              studentId = et_studentId.getText().toString();
 
-             SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
-             SharedPreferences.Editor editor = sharedPref.edit();
+            if(firstName.equals("")){
+                et_firstName.setError("Please enter a valid first name.");
+                isErrorThrown = true;
+            }else{
+                isErrorThrown = false;
+            }
+            if(lastName.equals("")){
+                et_lastName.setError("Please enter a valid last name.");
+                isErrorThrown = true;
+            }else{
+                isErrorThrown= false;
+            }
+            //try {
+                if(studentId.equals("") || studentId == null || Integer.parseInt(studentId) < 0 || studentId.length() != 9){
+                    isErrorThrown = true;
+                    et_studentId.setError("Please enter a 9 digit student id.");
 
-             editor.putString("saved_firstName", firstName);
-             editor.putString("saved_lastName", lastName);
-             editor.putString("saved_studentId", studentId);
-             editor.putString("saved_dept", selectedDept);
-             editor.apply();
-                
-             mListener.goToDisplayMyProfileFragment(v_avatar);
+                }else{
+                    isErrorThrown = false;
+                }
+           // }catch(Exception e){
+             //   isErrorThrown = true;
+           // }
+
+            if (selectedDept.equals("") || selectedDept == null){
+                Toast.makeText(getActivity(), "Please select a valid department", Toast.LENGTH_LONG).show();
+                isErrorThrown = true;
+            }else{
+                isErrorThrown = false;
+            }
+
+
+             if(!isErrorThrown){
+                 SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+                 SharedPreferences.Editor editor = sharedPref.edit();
+
+                 editor.putString("saved_firstName", firstName);
+                 editor.putString("saved_lastName", lastName);
+                 editor.putString("saved_studentId", studentId);
+                 editor.putString("saved_dept", selectedDept);
+                 editor.apply();
+
+                 mListener.goToDisplayMyProfileFragment(v_avatar);
+             }
+
             }
         });
     }
