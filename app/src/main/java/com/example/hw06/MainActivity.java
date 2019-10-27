@@ -2,6 +2,8 @@ package com.example.hw06;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 
@@ -13,6 +15,11 @@ public class MainActivity extends AppCompatActivity implements MyProfileFragment
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+            editor.clear();
+            editor.apply();
 
            getFragmentManager().beginTransaction()
                 .add(R.id.container, profileFragment, "myProfile")
@@ -45,9 +52,9 @@ public class MainActivity extends AppCompatActivity implements MyProfileFragment
     }
 
     @Override
-    public void goToProfileFragment() {
+    public void goToProfileFragment(View view) {
         getFragmentManager().beginTransaction()
-                .replace(R.id.container, new MyProfileFragment(), "fromDisplayToProfile")
+                .replace(R.id.container, new MyProfileFragment(view), "fromDisplayToProfile")
                 .commit();
     }
 }

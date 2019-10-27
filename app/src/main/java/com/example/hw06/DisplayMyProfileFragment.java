@@ -81,9 +81,11 @@ public class DisplayMyProfileFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                mListener.goToProfileFragment();
+                mListener.goToProfileFragment(v_selectedAvatar);
             }
         });
+
+        Log.d("test", "onActivityCreated: " + v_selectedAvatar.getTag());
 
         if (v_selectedAvatar != null) {
             if (v_selectedAvatar.getTag().equals("avatar1")) {
@@ -131,6 +133,6 @@ public class DisplayMyProfileFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-       void goToProfileFragment();
+       void goToProfileFragment(View view);
     }
 }

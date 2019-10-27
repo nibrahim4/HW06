@@ -40,7 +40,7 @@ public class MyProfileFragment extends Fragment  {
     public RadioButton rb_sis;
     public RadioButton rb_bio;
     public RadioButton rb_other;
-    public String selectedDept;
+    public String selectedDept = "";
 
     private OnFragmentInteractionListener mListener;
 
@@ -69,6 +69,7 @@ public class MyProfileFragment extends Fragment  {
 
 
 
+
        return inflater.inflate(R.layout.fragment_my_profile, container, false);
     }
 
@@ -77,7 +78,71 @@ public class MyProfileFragment extends Fragment  {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        et_firstName = getActivity().findViewById(R.id.et_firstName);
+        et_lastName = getActivity().findViewById(R.id.et_lastName);
+        et_studentId = getActivity().findViewById(R.id.et_studentNumber);
+        rg_dept = getActivity().findViewById(R.id.rg_departments);
+        rb_sis = getActivity().findViewById(R.id.rb_sis);
+        rb_other = getActivity().findViewById(R.id.rb_other);
+        rb_cs = getActivity().findViewById(R.id.rb_cs);
+        rb_bio = getActivity().findViewById(R.id.rb_bio);
         iv_selectAvatar = getActivity().findViewById(R.id.iv_selectAvatar);
+
+        rg_dept.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener(){
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup,  int i){
+                switch(radioGroup.getCheckedRadioButtonId()){
+                    case R.id.rb_bio:
+                        selectedDept = "BIO";
+                        break;
+                    case R.id.rb_cs:
+                        selectedDept = "CS";
+                        break;
+                    case R.id.rb_other:
+                        selectedDept = "OTHER";
+                        break;
+                    case R.id.rb_sis:
+                        selectedDept = "SIS";
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
+
+        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+
+        if(sharedPref != null){
+
+            String firstName = sharedPref.getString("saved_firstName",null);
+            String lastName = sharedPref.getString("saved_lastName",null);
+            String studentId = sharedPref.getString("saved_studentId", null);
+            String dept = sharedPref.getString("saved_dept", "");
+
+            et_firstName.setText(firstName);
+            et_lastName.setText(lastName);
+            et_studentId.setText(studentId);
+
+            switch (dept){
+                case "BIO":
+                    rb_bio.setChecked(true);
+                    break;
+                case "OTHER":
+                    rb_other.setChecked(true);
+                    break;
+                case "CS":
+                    rb_cs.setChecked(true);
+                    break;
+                case "SIS":
+                    rb_sis.setChecked(true);
+                    break;
+                    default :
+                        break;
+            }
+        }
+
+
+
 
         if (v_avatar != null) {
             if (v_avatar.getTag().equals("avatar1")) {
@@ -96,32 +161,9 @@ public class MyProfileFragment extends Fragment  {
 
         }
 
-        et_firstName = getActivity().findViewById(R.id.et_firstName);
-        et_lastName = getActivity().findViewById(R.id.et_lastName);
-        et_studentId = getActivity().findViewById(R.id.et_studentNumber);
-        rg_dept = getActivity().findViewById(R.id.rg_departments);
 
-        rg_dept.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener(){
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup,  int i){
-                switch(radioGroup.getCheckedRadioButtonId()){
-                    case R.id.rb_bio:
-                        selectedDept = "BIO";
-                        break;
-                    case R.id.rb_cs:
-                         selectedDept = "CS";
-                        break;
-                    case R.id.rb_other:
-                        selectedDept = "OTHER";
-                        break;
-                    case R.id.rb_sis:
-                        selectedDept = "SIS";
-                        break;
-                    default:
-                        break;
-                }
-            }
-        });
+
+
 
         getActivity().findViewById(R.id.iv_selectAvatar).setOnClickListener(new View.OnClickListener() {
             @Override
