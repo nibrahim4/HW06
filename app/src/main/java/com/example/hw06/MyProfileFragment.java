@@ -177,54 +177,50 @@ public class MyProfileFragment extends Fragment  {
             @Override
             public void onClick(View view) {
 
-             firstName = et_firstName.getText().toString();
-             lastName = et_lastName.getText().toString();
-             studentId = et_studentId.getText().toString();
+                try{
+                    firstName = et_firstName.getText().toString();
+                    lastName = et_lastName.getText().toString();
+                    studentId = et_studentId.getText().toString();
 
-            if(firstName.equals("")){
-                et_firstName.setError("Please enter a valid first name.");
-                isErrorThrown = true;
-            }else{
-                isErrorThrown = false;
-            }
-            if(lastName.equals("")){
-                et_lastName.setError("Please enter a valid last name.");
-                isErrorThrown = true;
-            }else{
-                isErrorThrown= false;
-            }
-            //try {
-                if(studentId.equals("") || studentId == null || Integer.parseInt(studentId) < 0 || studentId.length() != 9){
-                    isErrorThrown = true;
-                    et_studentId.setError("Please enter a 9 digit student id.");
+                    if(firstName.equals("")){
+                        et_firstName.setError("Please enter a valid first name.");
 
-                }else{
-                    isErrorThrown = false;
+                        throw new Exception();
+                    }
+                    if(lastName.equals("")){
+                        et_lastName.setError("Please enter a valid last name.");
+
+                        throw new Exception();
+                    }
+                    if(studentId.equals("") || studentId == null || Integer.parseInt(studentId) < 0 || studentId.length() != 9){
+
+                        et_studentId.setError("Please enter a 9 digit student id.");
+                        throw new Exception();
+
+                    }
+
+                    if (selectedDept.equals("") || selectedDept == null){
+                        Toast.makeText(getActivity(), "Please select a valid department", Toast.LENGTH_LONG).show();
+
+                        throw new Exception();
+                    }
+                        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPref.edit();
+
+                        editor.putString("saved_firstName", firstName);
+                        editor.putString("saved_lastName", lastName);
+                        editor.putString("saved_studentId", studentId);
+                        editor.putString("saved_dept", selectedDept);
+                        editor.apply();
+
+                        mListener.goToDisplayMyProfileFragment(v_avatar);
+
+                }catch(Exception e){
+
+                    Toast.makeText(getActivity(), "Please input all fields.", Toast.LENGTH_SHORT).show();
                 }
-           // }catch(Exception e){
-             //   isErrorThrown = true;
-           // }
-
-            if (selectedDept.equals("") || selectedDept == null){
-                Toast.makeText(getActivity(), "Please select a valid department", Toast.LENGTH_LONG).show();
-                isErrorThrown = true;
-            }else{
-                isErrorThrown = false;
-            }
 
 
-             if(!isErrorThrown){
-                 SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
-                 SharedPreferences.Editor editor = sharedPref.edit();
-
-                 editor.putString("saved_firstName", firstName);
-                 editor.putString("saved_lastName", lastName);
-                 editor.putString("saved_studentId", studentId);
-                 editor.putString("saved_dept", selectedDept);
-                 editor.apply();
-
-                 mListener.goToDisplayMyProfileFragment(v_avatar);
-             }
 
             }
         });
