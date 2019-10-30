@@ -19,6 +19,8 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import java.util.regex.Pattern;
+
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
@@ -182,12 +184,18 @@ public class MyProfileFragment extends Fragment  {
                     lastName = et_lastName.getText().toString();
                     studentId = et_studentId.getText().toString();
 
-                    if(firstName.equals("")){
+                    Pattern regex = Pattern.compile("[$&+,:;=\\\\?@#|/'<>.^*()%!-]");
+
+                    boolean isFNameSpecialCharFound = regex.matcher(firstName).find();
+
+                    boolean isLNameSpecialCharFound = regex.matcher(lastName).find();
+
+                    if(firstName.equals("") || isFNameSpecialCharFound){
                         et_firstName.setError("Please enter a valid first name.");
 
                         throw new Exception();
                     }
-                    if(lastName.equals("")){
+                    if(lastName.equals("") || isLNameSpecialCharFound){
                         et_lastName.setError("Please enter a valid last name.");
 
                         throw new Exception();
@@ -197,6 +205,11 @@ public class MyProfileFragment extends Fragment  {
                         et_studentId.setError("Please enter a 9 digit student id.");
                         throw new Exception();
 
+                    }
+
+                    if(v_avatar == null ){
+                        Toast.makeText(getActivity(), "Please select an avatar!", Toast.LENGTH_SHORT).show();
+                        throw new Exception();
                     }
 
                     if (selectedDept.equals("") || selectedDept == null){
@@ -217,7 +230,7 @@ public class MyProfileFragment extends Fragment  {
 
                 }catch(Exception e){
 
-                    Toast.makeText(getActivity(), "Please input all fields.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Please input all fields and ensure an avatar is selected.", Toast.LENGTH_SHORT).show();
                 }
 
 

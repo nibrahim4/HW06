@@ -7,6 +7,11 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 
+/**
+ * Group 20
+ * Nadia Dorado
+ * Nia Ibrahim
+ */
 public class MainActivity extends AppCompatActivity implements MyProfileFragment.OnFragmentInteractionListener , SelectAvatarFragment.OnFragmentInteractionListener, DisplayMyProfileFragment.OnFragmentInteractionListener{
 
     public MyProfileFragment profileFragment = new MyProfileFragment();
