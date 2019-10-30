@@ -230,7 +230,7 @@ public class MyProfileFragment extends Fragment  {
 
                 }catch(Exception e){
 
-                    Toast.makeText(getActivity(), "Please input all fields and ensure an avatar is selected.", Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(getActivity(), "Please input all fields and ensure an avatar is selected.", Toast.LENGTH_SHORT).show();
                 }
 
 
